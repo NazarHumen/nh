@@ -1129,19 +1129,19 @@ section:nth-child(odd) .animate.scroll,
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    /*background-color: rgba(0, 0, 0, 0.5);*/
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .modal-content {
-    background-color: #1f1f1f; /* Dark background like your site's theme */
+    background-color: var(--second-bg-color); /* Dark background like your site's theme */
     color: #fff;
     padding: 20px;
     border-radius: 10px;
     text-align: center;
-    font-size: 1.5em; /* Increased font size */
+    font-size: 2em; /* Increased font size */
 }
 
 .close-button {
