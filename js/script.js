@@ -55,7 +55,6 @@ document.getElementById('mobileNumber').addEventListener('input', function(e) {
     this.value = this.value.replace(/[^0-9+]/g, '');
 });
 
-// Відправка листа через EmailJS
 function sendMail(event) {
     event.preventDefault(); // Запобігаємо стандартному відправленню форми
 
@@ -65,16 +64,13 @@ function sendMail(event) {
     let subject = document.getElementById('subject').value;
     let message = document.getElementById('message').value;
 
-    // Перевірка на порожні поля
     if (!fullName || !email || !mobileNumber || !subject || !message) {
-        alert("Please fill in all fields before submitting.");
+        alert("Будь ласка, заповніть всі поля перед відправленням.");
         return;
     }
 
-    // Регулярний вираз для перевірки правильного формату email
     var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-    // Перевірка, чи це коректна електронна пошта з доменом
     if (!emailPattern.test(email)) {
         document.getElementById('error-message').style.display = 'block';
         return;
@@ -82,16 +78,13 @@ function sendMail(event) {
         document.getElementById('error-message').style.display = 'none';
     }
 
-    // Регулярний вираз для перевірки номеру телефону
-    var phonePattern = /^[+0-9]*$/; // Тільки + і цифри
+    var phonePattern = /^[+0-9]*$/;
 
-    // Перевірка номера телефону
     if (!phonePattern.test(mobileNumber)) {
-        alert("Please enter a valid phone number containing only numbers and a '+' sign.");
+        alert("Будь ласка, введіть коректний номер телефону, який містить лише цифри та знак '+'.");
         return;
     }
 
-    // Об'єкт з параметрами для відправлення
     let params = {
         name: fullName,
         email: email,
@@ -100,15 +93,19 @@ function sendMail(event) {
         message: message
     };
 
-    // Відправка через EmailJS
     emailjs.send("service_0011", "template_e1h2kvx", params)
         .then(function(response) {
-            alert("Email Sent!!");
-            document.getElementById('contact-form').reset(); // Очистити форму після успішної відправки
+            // Показуємо модальне вікно замість alert
+            document.getElementById('custom-modal').style.display = 'block';
+            document.getElementById('contact-form').reset(); // Очищуємо форму після успішної відправки
         }, function(error) {
-            alert("Failed to send email. Please try again later.");
-            console.error("Error sending email:", error);
+            alert("Не вдалося відправити листа. Спробуйте пізніше.");
+            console.error("Помилка відправлення:", error);
         });
+}
+
+function closeModal() {
+    document.getElementById('custom-modal').style.display = 'none';
 }
 
 // Додаємо обробник подій для форми
